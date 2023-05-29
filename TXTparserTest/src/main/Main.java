@@ -1,24 +1,22 @@
-package Main;
+package main;
 
-import Resource.*;
+import resource.FilesClosers;
+import resource.FilesOpeners;
+import resource.SaveListOfPhonesToFile;
+import resource.service.TxtService;
+import resource.util.FileUtils;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         String firstFile = "D://razrabotka_na_karantine//baza//orders.txt";
         String secondFile = "D://razrabotka_na_karantine//baza//orders3.txt";
-        FileReader openFile = FilesOpeners.openReader(firstFile);
-        Scanner scanner = ScanLines.linesScanner(openFile);
-        Set<String> UniquePhones = PutScanLinesToSet.putScanLinesToSet(scanner);
-        FilesClosers.readerCloser(openFile);
-        List<String> phoneList = ParserText.textParser(UniquePhones,
+        Set<String> uniquePhones = FileUtils.read(firstFile);
+        List<String> phoneList = TxtService.textParser(uniquePhones,
                 22,
                 "</Billing_Phone></Order>",
                 "+375");
