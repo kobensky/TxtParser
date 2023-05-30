@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 
 public class TxtService {
 
-    //TODO: добавить приватный конструктор
+    private static final int phoneLength = 13;
 
-
+    private TxtService() {
+        throw new IllegalStateException("Service class");
+    }
 
     public static Set<String> putScanLinesToSet(Scanner scanner) {
         Set<String> phoneNumbersSet = new HashSet<>();
@@ -28,7 +30,7 @@ public class TxtService {
     ) {
         return setOfPhones.stream()
                 .map(phoneNumber -> phoneNumber.substring(startPhoneIndex, phoneNumber.indexOf(endPhoneTagText)))
-                .filter(s -> s.startsWith(phoneCode) && s.length() == 13)
+                .filter(s -> s.startsWith(phoneCode) && s.length() == phoneLength)
                 .collect(Collectors.toList());
     }
 }
