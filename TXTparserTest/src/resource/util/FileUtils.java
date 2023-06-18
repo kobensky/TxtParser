@@ -7,9 +7,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 public class FileUtils {
 
@@ -17,13 +17,13 @@ public class FileUtils {
         throw new IllegalStateException("Util class");
     }
 
-    public static Set<String> read(String openFile) {
+    public static ArrayList<String> read(String openFile) {
         File openedFile = new File(openFile);
         try (
                 FileReader fileReader = new FileReader(openedFile);
                 Scanner scanner = new Scanner(fileReader)
         ) {
-            return TxtService.putScanLinesToSet(scanner);
+            return TxtService.putScanLinesToList(scanner);
         } catch (IOException e) {
             throw new TxtException(e.getMessage(), e);
         }
