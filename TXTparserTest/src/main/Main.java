@@ -1,21 +1,14 @@
 package main;
 
-import resource.parsInterface.*;
+import resource.formatter.*;
 import resource.util.FileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class Main {
-
-    public static List<ParseFuncInterface> getAllParsers() {
-        List<ParseFuncInterface> list = new ArrayList<>();
-        list.add(new SubstrMyScore());
-        list.add(new SubstrName());
-        list.add(new SubstrTimeDuration());
-        list.add(new SubstrTotalScore());
-        return list;
-    }
 
     public static void main(String[] args) {
         String firstFile = "D://razrabotka_na_karantine//baza//films.txt";
@@ -27,15 +20,15 @@ public class Main {
                 .filter(s-> s.contains("nameRus") || s.contains("<b>") || s.contains("мин")
                 || s.contains("удалить оценку"))
                 .map(String::trim)
-                .toList();
+                .collect(Collectors.toList());
 
         List<String> newNormString = new ArrayList<>();
 
 
-        List<ParseFuncInterface> list = getAllParsers();
+        List<BiConsumer<String, StringBuilder>> list = TransformConfiguration.getAllLineTransform();
         allNesStrings.forEach(s-> {
                     StringBuilder sb = new StringBuilder();
-                    list.forEach(k-> k.substringMeth(s, sb));
+                    list.forEach(k-> k.accept(s, sb));
                     newNormString.add(sb.toString());
                 });
 /*        for(String s : allNesStrings) {
