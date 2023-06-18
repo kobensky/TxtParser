@@ -33,8 +33,7 @@ public class Main {
 
 
         List<ParseFuncInterface> list = getAllParsers();
-        allNesStrings.stream()
-                .forEach(s-> {
+        allNesStrings.forEach(s-> {
                     StringBuilder sb = new StringBuilder();
                     list.forEach(k-> k.substringMeth(s, sb));
                     newNormString.add(sb.toString());
